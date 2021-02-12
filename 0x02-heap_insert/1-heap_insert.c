@@ -1,20 +1,19 @@
 #include "binary_trees.h"
-
 /**
- * heap_insert - inserts a value into a Max Binary Heap:
- * @root: address of the root or other node
- * @value: value of the new node
- * Description:
- * Este metodo se utiliza cuando queremos ordenar
- * de mayor a menor el arbol. Su complejidad es
- * de orden O(1) para la busqueda y orden O(Log n) para
- * la insercion.
- * Return: a pointer to the new node, or NULL on failure.
- */
+* heap_insert - inserts a value into a Max Binary Heap:
+* @root: address of the root or other node
+* @value: value of the new node
+* Description:
+* Este metodo se utiliza cuando queremos ordenar
+* de mayor a menor el arbol. Su complejidad es
+* de orden O(1) para la busqueda y orden O(Log n) para
+* la insercion.
+* Return: a pointer to the new node, or NULL on failure.
+*/
 heap_t *heap_insert(heap_t **root, int value)
 {
-	heap_t *c_n = NULL;/* current node */
-	int a, b, c, d;
+heap_t *c_n = NULL;
+int a, b, c, d;
 
 	if (root == NULL)/* si no es nada */
 		return (NULL);
