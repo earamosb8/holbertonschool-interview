@@ -1,28 +1,33 @@
-#ifndef LISTS_H
-#define LISTS_H
+#ifndef _BINARY_TREES_H_
+#define _BINARY_TREES_H_
 
-#include <stdio.h>
 #include <stddef.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 /**
- * struct listint_s - singly linked list
- * @n: integer
- * @next: points to the next node
+ * struct binary_tree_s - Binary tree node
  *
- * Description: singly linked list node structure
- * for Holberton project
+ * @n: Integer stored in the node
+ * @parent: Pointer to the parent node
+ * @left: Pointer to the left child node
+ * @right: Pointer to the right child node
  */
-typedef struct listint_s
+typedef struct binary_tree_s
 {
-    int n;
-    struct listint_s *next;
-} listint_t;
+	int n;
+	struct binary_tree_s *parent;
+	struct binary_tree_s *left;
+	struct binary_tree_s *right;
+} binary_tree_t;
 
-size_t print_listint(const listint_t *h);
-listint_t *add_nodeint_end(listint_t **head, const int n);
-void free_listint(listint_t *head);
+typedef struct binary_tree_s heap_t;
 
-listint_t *insert_node(listint_t **head, int number);
-
-#endif /* LISTS_H */
+void binary_tree_print(const binary_tree_t *);
+binary_tree_t *binary_tree_node(binary_tree_t *parent, int value);
+heap_t *heap_insert(heap_t **root, int value);
+heap_t *exchange_order(heap_t *son);
+size_t binary_tree_height(const binary_tree_t *tree);
+int binary_tree_is_perfect(const binary_tree_t *tree);
+size_t binary_tree_size(const binary_tree_t *tree);
+#endif /* _BINARY_TREES_H_ */
