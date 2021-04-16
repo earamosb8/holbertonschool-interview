@@ -1,45 +1,45 @@
 #!/usr/bin/python3
-""" Module that reads stdin line """
+"""
+    Reads stdin line by line and computes metrics:
+    For every 10 lines:
+        - print the status number with the number of times it
+        appears
+        - print the sum of the file sizes
+"""
+if __name__ == "__main__":
+    import sys
+    import signal
 
-import sys
+    c = fileSize = 0
+    statCount = {"200": 0, "301": 0, "400": 0, "401": 0, "403": 0,
+                 "404": 0, "405": 0, "500": 0}
 
-status_code = {
-    "200": 0,
-    "301": 0,
-    "400": 0,
-    "401": 0,
-    "403": 0,
-    "404": 0,
-    "405": 0,
-    "500": 0
-}
-output = 0
+    def handleTen(statCount, fileSize):
+        print("File size: {}".format(fileSize))
+        for key in sorted(statCount.keys()):
+            if statCount[key] == 0:
+                continue
+            print("{}: {}".format(key, statCount[key]))
 
-
-def main():
-    """ Method that prints stdin line by line """
-    print("File size: {}".format(output))
-    for status in sorted(status_code.keys()):
-        if status_code[status]:
-            print("{}: {}".format(status, status_code[status]))
-
-
-if __name__ == '__main__':
-    count = 0
     try:
         for line in sys.stdin:
+            c += 1
+            split = line.split(" ")
             try:
-                words = line.split()
-                output += int(words[-1])
-                if words[-2] in status_code:
-                    status_code[words[-2]] += 1
-            except:
+                status = split[-2]
+                fileSize += int(split[-1])
+
+                if status in statCount:
+                    statCount[status] += 1
+            except Exception:
                 pass
-            if count == 9:
-                main()
-                count = -1
-            count += 1
-    except KeyboardInterrupt:
-        main()
+
+            if c % 10 == 0:
+                handleTen(statCount, fileSize)
+
+        else:
+            handleTen(statCount, fileSize)
+
+    except (KeyboardInterrupt, SystemExit):
+        handleTen(statCount, fileSize)
         raise
-    main()
