@@ -1,27 +1,46 @@
-"""0. N queens"""
-
+#!/usr/bin/python3
+"""
+    0. N queens
+"""
 import sys
 
 
-def nqueens(n: int):
-    """
-    nqueens N
-    """
-    matrix = [[0 for x in range(n)] for y in range(n)]
-    print(str(matrix))
+def check_pos(s, pos):
+    for q in s:
+        if q[1] == pos[1]:
+            return False
+        if (q[0] + q[1]) == (pos[0] + pos[1]):
+            return False
+        if (q[0] - q[1]) == (pos[0] - pos[1]):
+            return False
+    return True
+
+
+def mv_q(r, n, s):
+    if (r == n):
+        print(s)
+    else:
+        for col in range(n):
+            pos = [r, col]
+            if check_pos(s, pos):
+                s.append(pos)
+                mv_q(r + 1, n, s)
+                s.remove(pos)
 
 
 if __name__ == "__main__":
-    if len(sys.argv) > 2 or len(sys.argv) < 2:
-        print("Usage: nqueens N")
+    if len(sys.argv) != 2:
+        print('Usage: nqueens N')
+        exit(1)
+    try:
+        n = int(sys.argv[1])
+    except BaseException:
+        print('N must be a number')
+        exit(1)
+    if n < 4:
+        print('N must be at least 4')
         exit(1)
 
-    if not sys.argv[1].isdigit():
-        print("N must be a number")
-        exit(1)
+    s = []
 
-    if int(sys.argv[1]) < 4:
-        print("N must be at least 4")
-        exit(1)
-
-    nqueens(int(sys.argv[1]))
+    mv_q(0, n, s)
