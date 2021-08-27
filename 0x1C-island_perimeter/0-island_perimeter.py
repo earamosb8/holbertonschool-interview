@@ -21,4 +21,3 @@ def island_perimeter(grid):
                 if (j >= len(grid[i]) - 1 or grid[i][j + 1] == 0):
                     p += 1
     return p
-
